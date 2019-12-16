@@ -21,7 +21,7 @@ let stringUpperCase = stringTwoSimbol.toUpperCase();
 
 let strString = string.indexOf('string');
 
-let strLastGap = string.lastIndexOf(' ');
+let  strLastGap = string.indexOf(' ', string.indexOf(' ') + 1);
 
 let str5Simbol4Letter = string.substr(5, 4);
 
