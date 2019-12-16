@@ -24,5 +24,6 @@ let numRandom = Math.random().toFixed(2);
 let rangeRandomNuber = Math.floor(Math.random() * (20 - 0) + 0);
 
 let sumNumber = 0.6 + 0.7;
+sumNumber.toFixed(1);
 
 let str = parseInt('100$');
