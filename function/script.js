@@ -27,73 +27,73 @@ funcGetUsers(users, “gender”, “male”); // [ {name: “Denis”, age: “
 */
 
 // 1
-function multiply () {
-  let num = 1;
-  if(arguments.length === 0) return 0;
+  function multiply () {
+    let num = 1;
+    if(arguments.length === 0) return 0;
 
-  for (let i = 0; i < arguments.length; i++) {
-    num *= arguments[i];
+    for (let i = 0; i < arguments.length; i++) {
+      num *= arguments[i];
+    }
+    return num;
   }
-  return num;
-}
-let multiNum = multiply();
+  let multiNum = multiply();
 // ----------------------------------------------------
 
 // 2
-function reverseString (str) {
-if (typeof str === 'string') {
-  return str.split('').reverse().join('');
-}
-return console.error('Аргумент не явлеятся строкой');
-}
-let str = reverseString('test');
+  function reverseString (str) {
+  if (typeof str === 'string') {
+    return str.split('').reverse().join('');
+  }
+  return console.error('Аргумент не явлеятся строкой');
+  }
+  let str = reverseString('test');
 // ----------------------------------------------------
 
 // 3
-function getCodeStringFromText (str) {
-  let splitStr = str.split('');
-  let strArr = [];
-  for (let i = 0; i < splitStr.length; i++) {
-    strCahrCode = splitStr[i].charCodeAt();
-    strArr.push(strCahrCode);   
+  function getCodeStringFromText (str) {
+    let splitStr = str.split('');
+    let strArr = [];
+    for (let i = 0; i < splitStr.length; i++) {
+      strCahrCode = splitStr[i].charCodeAt();
+      strArr.push(strCahrCode);   
+    }
+    return strArr.join(' ');  
   }
-  return strArr.join(' ');  
-}
-let charCodeStr = getCodeStringFromText('hello');
+  let charCodeStr = getCodeStringFromText('hello');
 // ----------------------------------------------------
 
 // 4
-function guessNumber (n = 0) {
-  let randomNum = Math.floor(Math.random() * (11 - 0) + 0);
-  if (n < 0 || n > 10) {
-    console.log('Ведите число от 0 до 10');
-    return;
-  } 
-  if (n === randomNum) {
-    console.log('Вы выиграли!');
-  } else {
-    console.log(`Вы не угадали ваше число ${n} а выпало число ${randomNum}`);
-  }  
-}
+  function guessNumber (n = 0) {
+    let randomNum = Math.floor(Math.random() * (11 - 0) + 0);
+    if (n < 0 || n > 10) {
+      console.log('Ведите число от 0 до 10');
+      return;
+    } 
+    if (n === randomNum) {
+      console.log('Вы выиграли!');
+    } else {
+      console.log(`Вы не угадали ваше число ${n} а выпало число ${randomNum}`);
+    }  
+  }
 // ----------------------------------------------------
 
 // 5
-function getArray(n) {
-  let arr = [];
-  for (let i = 1; i <= n; i++) {
-    arr.push(i);
+  function getArray(n) {
+    let arr = [];
+    for (let i = 1; i <= n; i++) {
+      arr.push(i);
+    }
+    return arr;
   }
-  return arr;
-}
-let numArr = getArray(10);
+  let numArr = getArray(10);
 // ----------------------------------------------------
 
 // 6
-let numArr6 = [1, 2, 3];
-function doubleArray (arr) {
-  return arr.concat(arr);
-}
-let newNumArr6 = doubleArray(numArr6);
+  let numArr6 = [1, 2, 3];
+  function doubleArray (arr) {
+    return arr.concat(arr);
+  }
+  let newNumArr6 = doubleArray(numArr6);
 // ---------------------------------------------------
 
 // 7
@@ -107,39 +107,39 @@ let newNumArr6 = doubleArray(numArr6);
 // ---------------------------------------------------
 
 // 8
-let userArr = [
-  {
-    name: 'Olga',
-    age: '20',
-    gender: 'female'
-  },
-  {
-    name: 'Petr',
-    age: '25',
-    gender: 'male'
-  },
-  {
-    name: 'Oleg',
-    age: '35',
-    gender: 'male'
-  },
-  {
-    name: 'Marina',
-    age: '43',
-    gender: 'female'
+  let userArr = [
+    {
+      name: 'Olga',
+      age: '20',
+      gender: 'female'
+    },
+    {
+      name: 'Petr',
+      age: '25',
+      gender: 'male'
+    },
+    {
+      name: 'Oleg',
+      age: '35',
+      gender: 'male'
+    },
+    {
+      name: 'Marina',
+      age: '43',
+      gender: 'female'
+    }
+  ];
+
+  function funcGetUsers (arr, gend, sex) {
+    let newArrUser = [];
+    for (let i = 0; i < arr.length; i++) {
+      if ((arr[i][gend]) && (arr[i][gend] === sex)) {
+        newArrUser.push(arr[i]);
+      }    
+    }
+    return newArrUser;  
   }
-];
 
-function funcGetUsers (arr, gender, male) {
-  let newArrUser = [];
-  for (let i = 0; i < arr.length; i++) {
-    console.log(arr[i].gender);
-  }
-  
-}
-
-funcGetUsers(userArr);
-
-
-//console.log(userArr);
+  let newUserArr = funcGetUsers(userArr, 'gender', 'male');  
 // ---------------------------------------------------
+
