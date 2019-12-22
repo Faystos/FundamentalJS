@@ -23,18 +23,16 @@ let list = {
 
 */
 
-// 1
+// 1  
   let str = 'i am in the easycode';
-  let strArr = str.split(' ');
-  let newStr = [];
-
-  for (let i = 0; i < strArr.length; i++) {  
-    let firstLet = strArr[i][0].toUpperCase();
-    let lastOf = strArr[i].slice(1);  
-    newStr[i] = firstLet + lastOf;
-  }
-
-  newStr = newStr.join(' ');
+  let newStr = '';
+  for (let i = 0; i < str.length; i++) {
+    if (i === 0 || str[i - 1] === ' ') {
+      newStr += str[i].toUpperCase();
+    } else {
+      newStr += str[i];
+    }
+  }  
 // --------------------------------------------
 
 // 2
@@ -57,16 +55,16 @@ let list = {
 // --------------------------------------------
 
 // 4
-  let str4 = 'JavaScript is a pretty good language';
-  let strArr4 = str.split(' ');
-  let newStr4 = [];
+  let str4 = 'JavaScript is a pretty good language';  
+  let newStr4 = '';
 
-  for (let i = 0; i < strArr4.length; i++) {
-    let firstLet4 = strArr[i][0].toUpperCase();
-    let lastOf4 = strArr[i].slice(1);  
-    newStr4[i] = firstLet4 + lastOf4;
-  }
-  newStr4 = newStr4.join('');  
+  for (let i = 0; i < str.length; i++) {
+    if (i === 0 || str4[i - 1] === ' ') {
+      newStr4 += str4[i].toUpperCase();
+    } else if (str4[i] !== ' ') {
+      newStr4 += str4[i];
+    }
+  }    
 // --------------------------------------------
 
 // 5
