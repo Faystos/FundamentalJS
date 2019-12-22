@@ -32,7 +32,7 @@ const numerator = {
 numerator.double().plusOne().plusOne().minusOne();
 numerator.value // 3
 */
-// 1
+// 1.1
 const rectangle = {
   width: '5см',
   height: '10см',
@@ -43,7 +43,7 @@ const rectangle = {
 };  
 // -------------------------------------------------------------
 
-// 2
+// 1.2
   const price = {
     price: 10,
     discount: '15%',
@@ -57,7 +57,7 @@ const rectangle = {
   }  
 // ------------------------------------------------------------
 
-// 3
+// 1.3
   const rectangle2 = {
     height: 15,
     getIncreaseHeight: function () {
@@ -66,7 +66,7 @@ const rectangle = {
   }
 // -----------------------------------------------------------
 
-// 4 
+// 1.4 
   const numerator = {
     value: 1,
     double: function () {
@@ -117,7 +117,7 @@ getElementHeight(); // undefined
 
 */
 
-// 1.2
+// 2.1
   const retailPrice = {
     price: 50,
     quantity: 5,
@@ -137,7 +137,7 @@ retailPrice2.getAllPrice2 = retailPrice.getAllPrice.bind(retailPrice2);
 
 // --------------------------------------------------------------
 
-// 3.3
+// 2.3
   let sizes = {
     width: 5,
     height: 10
@@ -148,7 +148,7 @@ retailPrice2.getAllPrice2 = retailPrice.getAllPrice.bind(retailPrice2);
   getSquare.call(sizes);
 // -------------------------------------------------------------
 
-// 4.4
+// 2.4
   let element = {
     height: 25,
     getHeight: function () {
