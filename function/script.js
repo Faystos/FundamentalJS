@@ -53,6 +53,7 @@ funcGetUsers(users, “gender”, “male”); // [ {name: “Denis”, age: “
   function getCodeStringFromText (str) {
     let splitStr = str.split('');
     let strArr = [];
+    let strCahrCode;
     for (let i = 0; i < splitStr.length; i++) {
       strCahrCode = splitStr[i].charCodeAt();
       strArr.push(strCahrCode);   
@@ -98,12 +99,17 @@ funcGetUsers(users, “gender”, “male”); // [ {name: “Denis”, age: “
 
 // 7
   let array7 = ['a', 'b', 'c'];
+  let arrNum = [1, 2, 3];
+  
   function changeCollection (arr) {
-    let newArr = [...arr];
-    newArr.shift(newArr);  
+    let newArr = [];    
+    for (let i = 0; i < arguments.length; i++){
+      newArr.push(arguments[i]);
+      newArr[i].shift(newArr[i]);              
+    }          
     return newArr;  
   } 
-  let newArr7 = changeCollection(array7);  
+  let newArr7 = changeCollection(array7, arrNum);  
 // ---------------------------------------------------
 
 // 8
@@ -130,10 +136,10 @@ funcGetUsers(users, “gender”, “male”); // [ {name: “Denis”, age: “
     }
   ];
 
-  function funcGetUsers (arr, gend, sex) {
+  function funcGetUsers (arr, prop, lue) {
     let newArrUser = [];
     for (let i = 0; i < arr.length; i++) {
-      if ((arr[i][gend]) && (arr[i][gend] === sex)) {
+      if ((arr[i][prop]) && (arr[i][prop] === lue)) {
         newArrUser.push(arr[i]);
       }    
     }
