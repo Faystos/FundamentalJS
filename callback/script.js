@@ -44,23 +44,20 @@ firstFunc([‘abc’, ‘123’], handler4) → “New value: cba, 321,” // с
     return `New value: ${newArr}`;
   }
 
-  function arrJoinStr (el) { 
-    el = el.split(' '); 
-    for (let i = 0; i < el.length; i++) {
-      let firstLet = el[i][0].toUpperCase();
-      let lastOf = el[i].slice(1);  
-      el[i] = firstLet + lastOf;        
-    }    
-    return el.join('');
-  }
+  function arrJoinStr (el) {     
+    let firstLet = el.slice(0, 1);
+    let lastOf = el.slice(1, el.length);  
+    el = `${firstLet.toUpperCase()}${lastOf}`;         
+    return el;
+  }  
 
   function arrMultiplyEl (el) {
-      el *= 10;
-      return el + ', ';
+    el *= 10;
+    return el + ', ';
   }
 
   function arrObjHadler(el) {
-      return `${el.name} is ${el.age}, `;
+    return `${el.name} is ${el.age}, `;
   }
 
   function arrReversEl (el) {
@@ -68,7 +65,7 @@ firstFunc([‘abc’, ‘123’], handler4) → “New value: cba, 321,” // с
   }
 
 
-  let res1 = handlerArrFunction(arr1, arrJoinStr);
+  let res1 = handlerArrFunction(arr1, arrJoinStr);  
   let res2 = handlerArrFunction(arr2, arrMultiplyEl);
   let res3 = handlerArrFunction(arr3, arrObjHadler);
   let res4 = handlerArrFunction(arr4, arrReversEl);
@@ -83,6 +80,7 @@ firstFunc([‘abc’, ‘123’], handler4) → “New value: cba, 321,” // с
     let check;
     for (let i = 0; i < arr.length; i++) {
       check = foo(arr[i]);
+      if (!check) break;
     }    
     return check;  
   }
