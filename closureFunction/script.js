@@ -72,9 +72,35 @@ const multiply = multiplyMaker(2);
       },
       strRevers() {
         return str.split('').reverse().join('');
-      }       
+      }            
     };
   }
 
-  let str = modulStr();  
-// ---------------------------------------------------------------------------------
+  let str = modulStr();    
+// ------------------------------------------------------------------------------------
+
+// 4
+  function getCalc () {
+    let numb;
+    return {
+      startValue (arg = 0) {
+        numb = arg;
+        return this;
+      },
+      foldNumb (arg = 0) {
+        numb += arg;
+        return this;
+      },
+      multiplyNumb (arg = 0) {
+       numb *= arg;
+       return this;
+      },
+      getNumb () {
+        return Math.round(numb);
+      }
+    };
+  }
+
+  let calc = getCalc();
+  let decision = calc.startValue(10).foldNumb(5).multiplyNumb(2).getNumb();   
+//-------------------------------------------------------------------------------------
