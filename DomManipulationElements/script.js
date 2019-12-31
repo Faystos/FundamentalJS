@@ -20,20 +20,17 @@ let parag = document.querySelector('p');
 // -------------------------------------------------------
 
 // 2.
-
-function nodeInfo (nodeDom) {
-  let typeNode = nodeDom.nodeType;
-  let nameNode = nodeDom.nodeName;
-  let lengthNodeChild = nodeDom.childNodes.length;
-  console.log(typeNode, nameNode, lengthNodeChild);
-}
+  function nodeInfo (nodeDom) {
+    let typeNode = nodeDom.nodeType;
+    let nameNode = nodeDom.nodeName;
+    let lengthNodeChild = nodeDom.childNodes.length;
+    console.log(typeNode, nameNode, lengthNodeChild);
+  }
 
 //nodeInfo(parag);
-
 // -------------------------------------------------------
 
 // 3.
-
   let listUl = document.querySelector('ul');
   function getTextFromUl () {    
     let arrChildEl = [...listUl.children];
@@ -43,17 +40,17 @@ function nodeInfo (nodeDom) {
     });
     return arrStr;
   }
-  // let childElContent = getTextFromUl(listUl);   
+// let childElContent = getTextFromUl(listUl);   
 
 // -------------------------------------------------------
 
 // 4.
-function getMultiInsert () {  
-  let childP = [...parag.childNodes];
-  childP.forEach(el => { 
-    if (el.nodeType === 3) el.textContent = '-text-';
-  });
-}
+  function getMultiInsert () {  
+    let childP = [...parag.childNodes];
+    childP.forEach(el => { 
+      if (el.nodeType === 3) el.textContent = '-text-';
+    });
+  }
  //getMultiInsert();
 // -------------------------------------------------------
 
@@ -70,26 +67,26 @@ function getMultiInsert () {
 */
 
 // 1.
-let ulList = document.querySelector('ul');
-ulList.classList.add('list');
-ulList.firstElementChild.id = 'link';
-let listsLi = [];
+  let ulList = document.querySelector('ul');
+  ulList.classList.add('list');
+  ulList.firstElementChild.id = 'link';
+  let listsLi = [];
 
-function getClassLi () {
-  listsLi = [...ulList.children];
-  listsLi.forEach((el, i) => {
-    i % 2 ? el.classList.add('item') : false;  
-  });
-}
+  function getClassLi () {
+    listsLi = [...ulList.children];
+    listsLi.forEach((el, i) => {
+      i % 2 ? el.classList.add('item') : false;  
+    });
+  }
 // getClassLi();
 
 // -------------------------------------------------------
 
 // 4. 
-let links = ulList.querySelectorAll('a');
-function getLinksClass () {
-  links.forEach(el => el.classList.add('custom-link'));
-}
+  let links = ulList.querySelectorAll('a');
+  function getLinksClass () {
+    links.forEach(el => el.classList.add('custom-link'));
+  }
 // getLinksClass();
 // -------------------------------------------------------
 
@@ -115,14 +112,20 @@ function getLinksClass () {
 */
 
 // 1.
-function getCreateLi () {
-  for (let i = ulList.children.length + 1; i < 10; i++) {
-    let listLi = document.createElement('li');
-    listLi.classList.add('new-item');
-    listLi.textContent = `item${i}`;
-    ulList.appendChild(listLi);    
+  function getCreateLi () {
+    for (let i = ulList.children.length + 1; i < 10; i++) {
+      let listLi = document.createElement('li');
+      listLi.classList.add('new-item');
+      listLi.textContent = `item${i}`;
+      ulList.appendChild(listLi);    
+    }
   }
-}
 
 // getCreateLi();
 // -------------------------------------------
+
+// 2.
+  links.forEach(el => {    
+    el.insertAdjacentHTML('beforebegin', '<strong>');
+  });
+// ----------------------------------------------------
