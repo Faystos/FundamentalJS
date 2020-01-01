@@ -128,4 +128,24 @@ let parag = document.querySelector('p');
   links.forEach(el => {    
     el.insertAdjacentHTML('beforebegin', '<strong>');
   });
-// ----------------------------------------------------
+// ----------------------------------------------------------
+
+// 3.
+  function createImg () {
+    let img = document.createElement('img');
+    img.src = 'https://wallpapercave.com/wp/wp2714960.jpg';
+    img.alt = 'Smile';
+    img.style.width = '100px';
+    img.style.height = '100px';
+    return img;
+  }
+
+  let bodys = document.body;
+  bodys.insertAdjacentElement('afterbegin', createImg());
+// ------------------------------------------------------------
+
+// 4. 
+  let mark = document.querySelector('mark');
+  mark.textContent += ' green';
+  mark.classList.add('green');
+// --------------------------------------------------------------
