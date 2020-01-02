@@ -15,7 +15,7 @@
 // 1.
 
 let parag = document.querySelector('p');
-//console.log(parag.textContent);
+  console.log(parag.textContent);
 
 // -------------------------------------------------------
 
@@ -27,7 +27,7 @@ let parag = document.querySelector('p');
     console.log(typeNode, nameNode, lengthNodeChild);
   }
 
-//nodeInfo(parag);
+  nodeInfo(parag);
 // -------------------------------------------------------
 
 // 3.
@@ -40,7 +40,7 @@ let parag = document.querySelector('p');
     });
     return arrStr;
   }
-// let childElContent = getTextFromUl(listUl);   
+  let childElContent = getTextFromUl(listUl);   
 
 // -------------------------------------------------------
 
@@ -51,7 +51,7 @@ let parag = document.querySelector('p');
       if (el.nodeType === 3) el.textContent = '-text-';
     });
   }
- //getMultiInsert();
+  getMultiInsert();
 // -------------------------------------------------------
 
 // ---------------------------------------------------------------------------------------------
@@ -69,7 +69,13 @@ let parag = document.querySelector('p');
 // 1.
   let ulList = document.querySelector('ul');
   ulList.classList.add('list');
-  ulList.firstElementChild.id = 'link';
+// -----------------------------------------------------------------------------------
+
+// 2.
+  ulList.nextElementSibling.nextElementSibling.id = 'link';
+// -----------------------------------------------------------------------------------
+
+// 3.
   let listsLi = [];
 
   function getClassLi () {
@@ -78,7 +84,7 @@ let parag = document.querySelector('p');
       i % 2 ? el.classList.add('item') : false;  
     });
   }
-// getClassLi();
+  getClassLi();
 
 // -------------------------------------------------------
 
@@ -87,7 +93,7 @@ let parag = document.querySelector('p');
   function getLinksClass () {
     links.forEach(el => el.classList.add('custom-link'));
   }
-// getLinksClass();
+  getLinksClass();
 // -------------------------------------------------------
 
 // -------------------------------------------------------------------------------------
@@ -121,7 +127,7 @@ let parag = document.querySelector('p');
     }
   }
 
-// getCreateLi();
+getCreateLi();
 // -------------------------------------------
 
 // 2.
@@ -148,4 +154,15 @@ let parag = document.querySelector('p');
   let mark = document.querySelector('mark');
   mark.textContent += ' green';
   mark.classList.add('green');
+// --------------------------------------------------------------
+
+// 5. 
+  function getReversList () {
+    let listLi = ulList.querySelectorAll('li');
+    let listLiRevers = [...listLi].sort((a, b) => a > b ? 1 : -1);  
+    let liFrag = document.createDocumentFragment();
+    listLiRevers.forEach(el => liFrag.appendChild(el));
+    ulList.appendChild(liFrag);
+  }
+  getReversList();
 // --------------------------------------------------------------
