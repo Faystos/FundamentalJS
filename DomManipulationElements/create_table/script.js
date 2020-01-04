@@ -63,27 +63,50 @@ const users = [
   }
 ];
 
-const headList = ['№', 'name', 'email', 'balans'];
-let table = document.querySelector('.table');
+const headList = ['№', 'name', 'email', 'balance'];
 
 function generateThead (arr) {
-  let theadTable = document.createElement('thead');
-  let tableTr = document.createElement('tr');
-  for (i = 0; i < headList.length; i++) {
-    let tableTd = document.createElement('td');
-    tableTd.textContent = arr[i];
-    tableTr.appendChild(tableTd);
-  }
-  theadTable.appendChild(tableTr);
-  table.appendChild(theadTable);
-
-}
-
-generateThead(headList);
-
-function generateTbody () {
-  for () {}
+  let thead = document.createElement('thead');
+  let headTr = document.createElement('tr');
   arr.forEach(el => {
-    
+    let headTh = document.createElement('th');
+    headTh.textContent = el;
+    headTr.appendChild(headTh);
   });
+  thead.appendChild(headTr);
+  return thead;  
 }
+
+function generateTbody (arrList, arrUsers) {
+  let tbody = document.createElement('tbody');
+
+  arrUsers.forEach((el, i) => {
+    let itemUsers = generateItemsBody(arrList, el);
+  });
+
+}
+
+function generateItemsBody (arr, item) {
+  let itemsArr = headList.reduce((acc, el) => {
+    if (el in item) {
+      acc[el] = item[el];
+    }
+    return acc;
+  }, {});
+
+  console.log(itemsArr);
+}
+
+function getCreatTable () {
+  let contener = document.querySelector('.conteiner');
+  let table = document.createElement('table');
+
+  let thead = generateThead(headList);
+  let body = generateTbody(headList, users);
+
+  contener.appendChild(table);
+  table.appendChild(thead);
+}
+
+
+getCreatTable();
