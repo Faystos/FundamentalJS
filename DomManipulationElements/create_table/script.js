@@ -1,25 +1,4 @@
-/*
-1. Создайте массив в которому будут находится названия заголовков таблицы.
 
-2. Создайте функцию которая будет на основе этого списка гененрировать тег thead и добавлять в него tr с td
-
-3. Создайте функцию которая будет генерировать tbody с tr для тела таблицы на основе массива пользователей
-
-4. Создайте функцию которая будет вызывать функцию по созданию thead из пункта 2 и функцию из пункта 3, результат вызова этих функций вы будете добавлять в саму таблицу.
-
-Примерно должно выглядеть так
-
-function generateThead(headList) {}
-function generateTbody(usersList) {}
-function generateTable() {
-  const table = document.createElement('table');
-  const head = generateThead(headList) ;
-  const body = generateTbody(usersList);
-  table.appendChild(head);
-  table.appendChild(body);
-  document.body.appendChild(table)
-}
-*/
 
 const users = [
   {
@@ -63,50 +42,98 @@ const users = [
   }
 ];
 
-const headList = ['№', 'name', 'email', 'balance'];
+const headList = {
+  index:'#',
+  name: 'name', 
+  email: 'email',
+  balance: 'balance'
+};
 
-function generateThead (arr) {
-  let thead = document.createElement('thead');
-  let headTr = document.createElement('tr');
-  arr.forEach(el => {
-    let headTh = document.createElement('th');
-    headTh.textContent = el;
-    headTr.appendChild(headTh);
-  });
+function generateThead (headlineArr) {
+  let thead = document.createElement('thead');  
+  let headTr = generateTd(headlineArr, 'th'); 
   thead.appendChild(headTr);
-  return thead;  
+  return thead; 
 }
 
-function generateTbody (arrList, arrUsers) {
+function generateTd (headlineArr, tagMane = 'td') {
+  let tr = document.createElement('tr');  
+  Object.values(headlineArr).forEach(el => {
+    let td = document.createElement(tagMane);
+    td.textContent = el;    
+    tr.appendChild(td);
+  });  
+  return tr;  
+}
+
+function generateTbody (headlineArr, bobyContent) {
   let tbody = document.createElement('tbody');
-
-  arrUsers.forEach((el, i) => {
-    let itemUsers = generateItemsBody(arrList, el);
-  });
-
+  bobyContent.forEach((el, i) => {
+    el.index = i + 1;
+    let itemUsers = generateItemsBody(headlineArr, el); 
+    let  trBody = generateTd(itemUsers);
+    tbody.appendChild(trBody);
+  });  
+  return tbody;
 }
 
-function generateItemsBody (arr, item) {
-  let itemsArr = headList.reduce((acc, el) => {
-    if (el in item) {
-      acc[el] = item[el];
+function generateItemsBody (headlineArr, bobyContent) {
+  let itemsArr = Object.keys(headlineArr).reduce((acc, el) => {
+    if (el in bobyContent) {
+      acc[el] = bobyContent[el];
     }
-    return acc;
+     return acc;
   }, {});
-
-  console.log(itemsArr);
+  return itemsArr;
 }
 
-function getCreatTable () {
+function getTotalBalans (headlineArr, bobyContents) {
+  let total = bobyContents.reduce((acc, item) => acc + parseFloat(item.balance), 0);
+  let totalTr = document.createElement('tr');
+  let totalTd = document.createElement('td');
+  let columnCount = Object.keys(headlineArr).length;
+
+  totalTd.insertAdjacentHTML('beforeend', `Общий баланс: ${total}`);
+  totalTd.setAttribute('colspan', columnCount);
+  totalTd.setAttribute('align', 'right');
+
+  totalTr.appendChild(totalTd);
+  return totalTr;
+}
+
+function getCreatTable (headlineArr, bobyContents) { 
   let contener = document.querySelector('.conteiner');
+  contener.style.width = '700px';
+  contener.style.margin = '0 auto';  
   let table = document.createElement('table');
 
-  let thead = generateThead(headList);
-  let body = generateTbody(headList, users);
+  let thead = generateThead(headlineArr);  
+  let tBody = generateTbody(headlineArr, bobyContents);
+  let total = getTotalBalans(headlineArr, bobyContents);
 
   contener.appendChild(table);
   table.appendChild(thead);
+  table.appendChild(tBody);
+  table.appendChild(total);
+  contener.appendChild(table); 
+  
+  function getStyleTable () {
+    let table = document.querySelector('table');
+    table.style. borderCollapse = 'collapse';
+    table.style.width = '100%';
+    let thTHead = document.querySelectorAll('th');
+    thTHead.forEach(el => {  
+      el.style.borderBottom = '2px solid rgba(69, 66, 65, .3)';
+      el.style.textAlign = 'left';
+      el.style.padding = '5px';  
+    }); 
+    let tdTHead = document.querySelectorAll('td').forEach(el => {   
+      el.style.borderTop = '1px solid rgba(69, 66, 65, .3)';
+      el.style.paddingTop = '25px';
+      el.style.paddingBottom = '25px';      
+    }); 
+  }
+  getStyleTable();
 }
 
-
-getCreatTable();
+getCreatTable(headList, users);
