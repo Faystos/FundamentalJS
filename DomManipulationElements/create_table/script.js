@@ -1,5 +1,3 @@
-
-
 const users = [
   {
     "_id": "5d220b10e8265cc978e2586b",
