@@ -67,24 +67,24 @@ function generateTd (headlineArr, tagMane = 'td') {
 }
 
 // Генерация тела таблицы
-function generateTbody (headlineArr, bobyContent) {
+function generateTbody (headlineArr, bodyContent) {
   let tbody = document.createElement('tbody');
-  bobyContent.forEach((el, i) => {
+  bodyContent.forEach((el, i) => {
     el.index = i + 1;
     let itemUsers = generateItemsBody(headlineArr, el); 
     let  trBody = generateTd(itemUsers);
     tbody.appendChild(trBody);
   });  
-  let total = getTotalBalans(headlineArr, bobyContent);  
+  let total = getTotalBalans(headlineArr, bodyContent);  
   tbody.appendChild(total);
   return tbody;
 }
 
 // Обработка контента тела таблицы
-function generateItemsBody (headlineArr, bobyContent) {
+function generateItemsBody (headlineArr, bodyContent) {
   let itemsArr = Object.keys(headlineArr).reduce((acc, el) => {
-    if (el in bobyContent) {
-      acc[el] = bobyContent[el];
+    if (el in bodyContent) {
+      acc[el] = bodyContent[el];
     }
      return acc;
   }, {});
@@ -92,8 +92,8 @@ function generateItemsBody (headlineArr, bobyContent) {
 }
 
 // Ячейка с информацие общего баланса
-function getTotalBalans (headlineArr, bobyContents) {
-  let total = bobyContents.reduce((acc, item) => acc + parseFloat(item.balance), 0);
+function getTotalBalans (headlineArr, bodyContents) {
+  let total = bodyContents.reduce((acc, item) => acc + parseFloat(item.balance), 0);
   let totalTr = document.createElement('tr');
   let totalTd = document.createElement('td');
   let columnCount = Object.keys(headlineArr).length;
@@ -125,14 +125,14 @@ function getStyleTable () {
 }
 
 // Инициация таблицы
-function getCreatTable (headlineArr, bobyContents) { 
+function getCreatTable (headlineArr, bodyContents) { 
   let contener = document.querySelector('.conteiner');
   contener.style.width = '700px';
   contener.style.margin = '0 auto';  
   let table = document.createElement('table');
 
   let thead = generateThead(headlineArr);  
-  let tBody = generateTbody(headlineArr, bobyContents);   
+  let tBody = generateTbody(headlineArr, bodyContents);   
 
   contener.appendChild(table);
   table.appendChild(thead);
