@@ -1,0 +1,41 @@
+.main_sort {
+  width: 700px;
+  min-height: 50px;  
+  margin: 0 auto 15px auto;
+}
+
+.btn_sort {
+  background-color: #4169E1;
+  border: none;
+  outline: none;
+  height: 30px;
+  width: 100px;
+  border-radius: 5px;
+  color: #ffffff;
+  margin: 10px 0 10px 0;
+  cursor: pointer;
+  padding-right: 15px;
+}
+
+.btn_sort:hover {
+  opacity: 0.6;
+}
+
+.btn_sort:active {
+  opacity: 0.4;
+}
+
+.sort_up {  
+  background-image: url("https://icon-icons.com/icons2/2030/PNG/48/angle_bottom_arrow_icon_123989.png");  
+  background-repeat: no-repeat;
+  background-size: 48px;
+  background-position: 55px center;
+}
+
+.sort_down {
+  background-image: url("https://icon-icons.com/icons2/2030/PNG/48/angle_top_arrow_icon_123992.png");    
+  background-repeat: no-repeat;
+  background-size: 48px;
+  background-position: 55px center;
+}
+
