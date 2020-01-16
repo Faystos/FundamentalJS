@@ -1,40 +1,55 @@
 (function () {
+
+  // элементы Dom.
   const urlGet = 'https://jsonplaceholder.typicode.com/users';
   let btnGet = document.querySelector('.btn_get');
   let blockUserName = document.querySelector('.name_sers');
   let blockAllInfoUsers = document.querySelector('.all_info_user');
-  
-  function getRequst (onSuccess) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', urlGet);
-    xhr.addEventListener('load', () => {
-      const response = JSON.parse(xhr.responseText);
-      onSuccess(response);
-    });
-    xhr.send();
+
+  // Функция запроса.  
+  function getRequest (method, url, onSuccess, onError) {
+    try {
+      const xhr = new XMLHttpRequest();
+      xhr.open(method, url);
+    
+      xhr.addEventListener('load', () => {        
+        if (Math.floor(xhr.status / 100) !== 2) onError(`Возникла ошибка: ${xhr.status}`, xhr);
+        const response = JSON.parse(xhr.responseText);
+        onSuccess(response);      
+      });
+
+      xhr.addEventListener('error', () => {
+        onError(`Возникла ошибка: ${xhr.status}`, xhr);
+      });    
+    
+      xhr.send();
+    } catch (error) {
+      onError(error);
+    }
+    
   }
-  
+
+  // функция обработки блока со списком имен.  
   function inputNameUser (response) {
     const fragment = document.createDocumentFragment();
     const list = document.createElement('ul');
+
     response.forEach(user => {
       const listLi = document.createElement('li');
       listLi.classList.add('list_user');
-      listLi.textContent = `${user.id}.`;
-      
+      listLi.textContent = `${user.id}.`;      
       const userNameP = document.createElement('p');
       userNameP.classList.add('parag_user_name');
       userNameP.textContent = `${user.name}`;
-
       listLi.appendChild(userNameP);
       list.appendChild(listLi);
 
-      fragment.appendChild(list);
-           
+      fragment.appendChild(list);           
     });
     return fragment; 
   }  
   
+  // функция обработки блока и информацией пользователей.
   function allInfoUser (user) {
     const fragment = document.createDocumentFragment();
     const blockInfoUser = document.createElement('div');
@@ -72,6 +87,7 @@
     blockAllInfoUsers.appendChild(blockInfoUser);
   }
   
+  //функция удаление необходимого блока.
   function removeBlock (element) {
     if (document.querySelector(element)) {
       document.querySelector(element).remove();
@@ -79,30 +95,34 @@
       return;
     }
   }  
-    
+   
+  // функция вывода информации о пользователях.
   function inputInfoUsers (response) {
     blockUserName.addEventListener('click', evt => {
-    if (!evt.target.classList.contains('parag_user_name')) return;
-    
-    
-    response.forEach(user => {
-      if (evt.target.textContent === user.name) {
-        removeBlock('.block_info');
-        allInfoUser(user);
-      }
-    });
-    
+      if (!evt.target.classList.contains('parag_user_name')) return;    
+      response.forEach(user => {
+        if (evt.target.textContent === user.name) {
+          removeBlock('.block_info');
+          allInfoUser(user);
+        }
+      });    
     });
   }  
   
+  // функция выполнения при успешном запросе.
   function onSuccess (response) { 
    const arrUsers = [...response]; 
    const allUserNames = inputNameUser(arrUsers);
    blockUserName.appendChild(allUserNames);
    inputInfoUsers(arrUsers); 
   }
+
+  // функция при возникновении ошибки при запросе.
+  function onError (error) {
+    alert(error);
+  }
   
   btnGet.addEventListener('click', () => {
-    getRequst(onSuccess);
+    getRequest('GET', urlGet,onSuccess, onError);
   });
 })();
