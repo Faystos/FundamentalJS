@@ -8,27 +8,52 @@
   let nameList = document.querySelector('.name_list');
   let blockAllInfoUsers = document.querySelector('.all_info_user');
 
-// Функция get запроса.  
-  function getRequest (method, url, onSuccess, onError) {
-    try {
-      const xhr = new XMLHttpRequest();
-      xhr.open(method, url);
-    
-      xhr.addEventListener('load', () => {        
-        if (Math.floor(xhr.status / 100) !== 2) onError(`Возникла ошибка: ${xhr.status}`, xhr);
-        const response = JSON.parse(xhr.responseText);
-        onSuccess(response);      
-      });
-
-      xhr.addEventListener('error', () => {
-        onError(`Возникла ошибка: ${xhr.status}`, xhr);
-      });    
-    
-      xhr.send();
-    } catch (error) {
-      onError(error);
-    }    
-  }
+// Функция Requests запроса.  
+function myRequest () {
+  return {
+    getRequest:  function getRequest (method, url, onSuccess, onError) {
+      try {
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+      
+        xhr.addEventListener('load', () => {        
+          if (Math.floor(xhr.status / 100) !== 2) onError(`Возникла ошибка: ${xhr.status}`, xhr);
+          const response = JSON.parse(xhr.responseText);
+          onSuccess(response);      
+        });
+  
+        xhr.addEventListener('error', () => {
+          onError(`Возникла ошибка: ${xhr.status}`, xhr);
+        });    
+      
+        xhr.send();
+      } catch (error) {
+        onError(error);
+      }    
+    },
+    postRequest: function postRequest (method, url, onSuccess, onError, body) {
+      try {
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, url);    
+        xhr.addEventListener('load', () => {        
+          if (Math.floor(xhr.status / 100) !== 2) onError(`Возникла ошибка: ${xhr.status}`, xhr);
+          const response = JSON.parse(xhr.responseText);
+          onSuccess(response);      
+        });
+  
+        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+  
+        xhr.addEventListener('error', () => {
+          onError(`Возникла ошибка: ${xhr.status}`, xhr);
+        });    
+      
+        xhr.send(JSON.stringify(body));
+      } catch (error) {
+        onError(error);
+      }    
+    }
+  };
+}
 
 // функция обработки блока со списком имен.  
   function inputNameUser (response) {
@@ -121,7 +146,7 @@
   }
   
   btnGet.addEventListener('click', () => {
-    getRequest('GET', urlGet,onSuccess, onError);
+    myRequest().getRequest('GET', urlGet,onSuccess, onError);
   });
 
 // обработка формы.
@@ -148,28 +173,6 @@
     };
     return bodyForm;
   }
-// обработка post запроса.
-  function postRequest (method, url, onSuccess, onError, body) {
-    try {
-      const xhr = new XMLHttpRequest();
-      xhr.open(method, url);    
-      xhr.addEventListener('load', () => {        
-        if (Math.floor(xhr.status / 100) !== 2) onError(`Возникла ошибка: ${xhr.status}`, xhr);
-        const response = JSON.parse(xhr.responseText);
-        onSuccess(response);      
-      });
-
-      xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-      xhr.addEventListener('error', () => {
-        onError(`Возникла ошибка: ${xhr.status}`, xhr);
-      });    
-    
-      xhr.send(JSON.stringify(body));
-    } catch (error) {
-      onError(error);
-    }    
-  }
 
 // действия при успехе пост запроса.
   function postOnSuccess (response) {    
@@ -189,6 +192,6 @@
   btnSubm.addEventListener('click', evt => {
     evt.preventDefault();
     let bodyForm = createBodyForm();    
-    postRequest('POST', urlPost, postOnSuccess, postOnError, bodyForm);
+    myRequest().postRequest('POST', urlPost, postOnSuccess, postOnError, bodyForm);
   });
 })();
