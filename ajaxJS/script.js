@@ -1,12 +1,14 @@
 (function () {
 
-  // элементы Dom.
+// элементы Dom.
   const urlGet = 'https://jsonplaceholder.typicode.com/users';
+  const urlPost = 'https://jsonplaceholder.typicode.com/posts';
   let btnGet = document.querySelector('.btn_get');
-  let blockUserName = document.querySelector('.name_sers');
+  let blockUserName = document.querySelector('.name_users');
+  let nameList = document.querySelector('.name_list');
   let blockAllInfoUsers = document.querySelector('.all_info_user');
 
-  // Функция запроса.  
+// Функция get запроса.  
   function getRequest (method, url, onSuccess, onError) {
     try {
       const xhr = new XMLHttpRequest();
@@ -25,15 +27,13 @@
       xhr.send();
     } catch (error) {
       onError(error);
-    }
-    
+    }    
   }
 
-  // функция обработки блока со списком имен.  
+// функция обработки блока со списком имен.  
   function inputNameUser (response) {
-    const fragment = document.createDocumentFragment();
-    const list = document.createElement('ul');
-
+    const fragment = document.createDocumentFragment();      
+      
     response.forEach(user => {
       const listLi = document.createElement('li');
       listLi.classList.add('list_user');
@@ -41,15 +41,13 @@
       const userNameP = document.createElement('p');
       userNameP.classList.add('parag_user_name');
       userNameP.textContent = `${user.name}`;
-      listLi.appendChild(userNameP);
-      list.appendChild(listLi);
-
-      fragment.appendChild(list);           
+      listLi.appendChild(userNameP);      
+      fragment.appendChild(listLi);           
     });
     return fragment; 
   }  
   
-  // функция обработки блока и информацией пользователей.
+// функция обработки блока и информацией пользователей.
   function allInfoUser (user) {
     const fragment = document.createDocumentFragment();
     const blockInfoUser = document.createElement('div');
@@ -84,10 +82,10 @@
     fragment.appendChild(userAddressCity);
     fragment.appendChild(userAddressStreet);
     blockInfoUser.appendChild(fragment);
-    blockAllInfoUsers.appendChild(blockInfoUser);
+    blockAllInfoUsers.appendChild(blockInfoUser);    
   }
   
-  //функция удаление необходимого блока.
+//функция удаление необходимого блока.
   function removeBlock (element) {
     if (document.querySelector(element)) {
       document.querySelector(element).remove();
@@ -96,7 +94,7 @@
     }
   }  
    
-  // функция вывода информации о пользователях.
+// функция вывода информации о пользователях.
   function inputInfoUsers (response) {
     blockUserName.addEventListener('click', evt => {
       if (!evt.target.classList.contains('parag_user_name')) return;    
@@ -109,15 +107,15 @@
     });
   }  
   
-  // функция выполнения при успешном запросе.
-  function onSuccess (response) { 
-   const arrUsers = [...response]; 
-   const allUserNames = inputNameUser(arrUsers);
-   blockUserName.appendChild(allUserNames);
+// функция выполнения при успешном запросе.
+  function onSuccess (response) {     
+   const arrUsers = [...response];    
+   const allUserNames = inputNameUser(arrUsers);   
+   nameList.prepend(allUserNames);   
    inputInfoUsers(arrUsers); 
   }
 
-  // функция при возникновении ошибки при запросе.
+// функция при возникновении ошибки при запросе.
   function onError (error) {
     alert(error);
   }
@@ -126,38 +124,35 @@
     getRequest('GET', urlGet,onSuccess, onError);
   });
 
-
-
-  // обработка формы.
-
+// обработка формы.
   let userEmail = document.querySelector('#exampleInputEmail1');
   let userName = document.querySelector('#formGroupExampleInput1');
   let userLogin = document.querySelector('#formGroupExampleInput2');
+  let userPhone = document.querySelector('#example-tel-input');
   let btnSubm = document.querySelector('.btn_submit');
 
   function createBodyForm () {
-    let userEmailValue = userEmail.value;
-    let userNameValue = userName.value;
-    let userLoginValue = userLogin.value;
+    let userEmailValue = userEmail.value || 'Нет информации.';
+    let userNameValue = userName.value || 'Нет информации.';
+    let userLoginValue = userLogin.value || 'Нет информации.';
+    let userPhoneValue = userPhone.value || 'Нет информации.';
     const bodyForm = {
       email: userEmailValue,
       name: userNameValue,
       username: userLoginValue,
-      phone: 'Нет информации',
+      phone: userPhoneValue,
       address: {
-        city: 'Нет информации',
-        street: 'Нет информации'
+        city: 'Нет информации.',
+        street: 'Нет информации.'
       }
     };
-
     return bodyForm;
   }
-
+// обработка post запроса.
   function postRequest (method, url, onSuccess, onError, body) {
     try {
       const xhr = new XMLHttpRequest();
-      xhr.open(method, url);
-    // "Content-type": "application/json; charset=UTF-8"
+      xhr.open(method, url);    
       xhr.addEventListener('load', () => {        
         if (Math.floor(xhr.status / 100) !== 2) onError(`Возникла ошибка: ${xhr.status}`, xhr);
         const response = JSON.parse(xhr.responseText);
@@ -176,22 +171,24 @@
     }    
   }
 
+// действия при успехе пост запроса.
   function postOnSuccess (response) {    
     const postPesponse = [];
     postPesponse.push(response);
-    blockUserName.appendChild(inputNameUser(postPesponse));
-    inputInfoUsers(postPesponse);
-    
-    
+    let oneNameUser = inputNameUser(postPesponse);    
+    nameList.append(oneNameUser);    
+    inputInfoUsers(postPesponse);    
   }
 
+// действия при возникновении ошибки пост запроса.
   function postOnError (error){
-    console.log(error);
+    alert(error);
   }
 
+// обработка действия кнопки отправки формы.  
   btnSubm.addEventListener('click', evt => {
     evt.preventDefault();
     let bodyForm = createBodyForm();    
-    postRequest('POST', 'https://jsonplaceholder.typicode.com/posts', postOnSuccess, postOnError, bodyForm);
+    postRequest('POST', urlPost, postOnSuccess, postOnError, bodyForm);
   });
 })();
