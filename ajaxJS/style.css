@@ -1,9 +1,23 @@
+.all_users,
+.create_user {  
+  width: 800px;
+  margin: 0 auto;
+}
+
+.form_user {
+  margin: 5px;
+}
+
+.create_user {
+  margin-bottom: 20px;
+}
+
 .conteiner {
-  display: flex;
+  display: flex;  
 }
 
 .name_users {
-  width: 25%;
+  width: 250px;
   min-height: 100px; 
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, .3);
@@ -11,7 +25,7 @@
 }
 
 .all_info_user {
-  width: 45%;
+  width: 450px;
   min-height: 100px; 
   padding: 10px; 
   border: 1px solid rgba(0, 0, 0, .3);
@@ -20,7 +34,7 @@
 
 .parag_user_name {
   cursor: pointer;
-  margin: 0 0 15px 0;
+  
 }
 
 ul {
@@ -33,10 +47,8 @@ ul {
   align-items: baseline;   
 }
 
-.parag_user_name {
-  margin-left: 10px;
-}
-
-.btn_get {
+.btn_get,
+.btn_submit {
   margin-left: 5px;
 }
+
