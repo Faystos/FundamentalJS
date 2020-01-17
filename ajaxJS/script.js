@@ -14,10 +14,12 @@ function myRequest () {
     getRequest:  function getRequest (method, url, onSuccess, onError) {
       try {
         const xhr = new XMLHttpRequest();
-        xhr.open(method, url);
-      
+        xhr.open(method, url);      
         xhr.addEventListener('load', () => {        
-          if (Math.floor(xhr.status / 100) !== 2) onError(`Возникла ошибка: ${xhr.status}`, xhr);
+          if (Math.floor(xhr.status / 100) !== 2) {
+            onError(`Возникла ошибка: ${xhr.status}`, xhr);
+            return;
+          }
           const response = JSON.parse(xhr.responseText);
           onSuccess(response);      
         });
@@ -36,7 +38,10 @@ function myRequest () {
         const xhr = new XMLHttpRequest();
         xhr.open(method, url);    
         xhr.addEventListener('load', () => {        
-          if (Math.floor(xhr.status / 100) !== 2) onError(`Возникла ошибка: ${xhr.status}`, xhr);
+          if (Math.floor(xhr.status / 100) !== 2) {
+            onError(`Возникла ошибка: ${xhr.status}`, xhr);
+            return;
+          }
           const response = JSON.parse(xhr.responseText);
           onSuccess(response);      
         });
