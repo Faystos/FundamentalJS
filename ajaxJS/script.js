@@ -1,5 +1,4 @@
 (function () {
-
 // элементы Dom.
   const urlGet = 'https://jsonplaceholder.typicode.com/users';
   const urlPost = 'https://jsonplaceholder.typicode.com/posts';
@@ -7,58 +6,59 @@
   let blockUserName = document.querySelector('.name_users');
   let nameList = document.querySelector('.name_list');
   let blockAllInfoUsers = document.querySelector('.all_info_user');
+  let requestHttp = myRequest(); 
 
 // Функция Requests запроса.  
-function myRequest () {
-  return {
-    getRequest:  function getRequest (method, url, onSuccess, onError) {
-      try {
-        const xhr = new XMLHttpRequest();
-        xhr.open(method, url);      
-        xhr.addEventListener('load', () => {        
-          if (Math.floor(xhr.status / 100) !== 2) {
+  function myRequest () {
+    return {
+      getRequest:  function getRequest (method, url, onSuccess, onError) {
+        try {
+          const xhr = new XMLHttpRequest();
+          xhr.open(method, url);      
+          xhr.addEventListener('load', () => {        
+            if (Math.floor(xhr.status / 100) !== 2) {
+              onError(`Возникла ошибка: ${xhr.status}`, xhr);
+              return;
+            }
+            const response = JSON.parse(xhr.responseText);
+            onSuccess(response);      
+          });
+    
+          xhr.addEventListener('error', () => {
             onError(`Возникла ошибка: ${xhr.status}`, xhr);
-            return;
-          }
-          const response = JSON.parse(xhr.responseText);
-          onSuccess(response);      
-        });
-  
-        xhr.addEventListener('error', () => {
-          onError(`Возникла ошибка: ${xhr.status}`, xhr);
-        });    
-      
-        xhr.send();
-      } catch (error) {
-        onError(error);
-      }    
-    },
-    postRequest: function postRequest (method, url, onSuccess, onError, body) {
-      try {
-        const xhr = new XMLHttpRequest();
-        xhr.open(method, url);    
-        xhr.addEventListener('load', () => {        
-          if (Math.floor(xhr.status / 100) !== 2) {
+          });    
+        
+          xhr.send();
+        } catch (error) {
+          onError(error);
+        }    
+      },
+      postRequest: function postRequest (method, url, onSuccess, onError, body) {
+        try {
+          const xhr = new XMLHttpRequest();
+          xhr.open(method, url);    
+          xhr.addEventListener('load', () => {        
+            if (Math.floor(xhr.status / 100) !== 2) {
+              onError(`Возникла ошибка: ${xhr.status}`, xhr);
+              return;
+            }
+            const response = JSON.parse(xhr.responseText);
+            onSuccess(response);      
+          });
+    
+          xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    
+          xhr.addEventListener('error', () => {
             onError(`Возникла ошибка: ${xhr.status}`, xhr);
-            return;
-          }
-          const response = JSON.parse(xhr.responseText);
-          onSuccess(response);      
-        });
-  
-        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-  
-        xhr.addEventListener('error', () => {
-          onError(`Возникла ошибка: ${xhr.status}`, xhr);
-        });    
-      
-        xhr.send(JSON.stringify(body));
-      } catch (error) {
-        onError(error);
-      }    
-    }
-  };
-}
+          });    
+        
+          xhr.send(JSON.stringify(body));
+        } catch (error) {
+          onError(error);
+        }    
+      }
+    };
+  }
 
 // функция обработки блока со списком имен.  
   function inputNameUser (response) {
@@ -151,7 +151,7 @@ function myRequest () {
   }
   
   btnGet.addEventListener('click', () => {
-    myRequest().getRequest('GET', urlGet,onSuccess, onError);
+    requestHttp.getRequest('GET', urlGet,onSuccess, onError);
   });
 
 // обработка формы.
@@ -197,6 +197,6 @@ function myRequest () {
   btnSubm.addEventListener('click', evt => {
     evt.preventDefault();
     let bodyForm = createBodyForm();    
-    myRequest().postRequest('POST', urlPost, postOnSuccess, postOnError, bodyForm);
+    requestHttp.postRequest('POST', urlPost, postOnSuccess, postOnError, bodyForm);
   });
 })();
