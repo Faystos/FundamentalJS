@@ -7,6 +7,9 @@
   let nameList = document.querySelector('.name_list');
   let blockAllInfoUsers = document.querySelector('.all_info_user');
   let requestHttp = myRequest(); 
+  let headerRequest = {
+    "Content-type": "application/json; charset=UTF-8"
+  };  
 
 // Функция Requests запроса.  
   function myRequest () {
@@ -33,7 +36,7 @@
           onError(error);
         }    
       },
-      postRequest: function postRequest (method, url, onSuccess, onError, body) {
+      postRequest: function postRequest (method, url, onSuccess, onError, body, headers) {
         try {
           const xhr = new XMLHttpRequest();
           xhr.open(method, url);    
@@ -46,11 +49,17 @@
             onSuccess(response);      
           });
     
-          xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+          
     
           xhr.addEventListener('error', () => {
             onError(`Возникла ошибка: ${xhr.status}`, xhr);
-          });    
+          });  
+          
+          if (headers) {
+            Object.entries(headers).forEach(([key, value]) => {
+              xhr.setRequestHeader(key, value);
+            });
+          }
         
           xhr.send(JSON.stringify(body));
         } catch (error) {
@@ -197,6 +206,6 @@
   btnSubm.addEventListener('click', evt => {
     evt.preventDefault();
     let bodyForm = createBodyForm();    
-    requestHttp.postRequest('POST', urlPost, postOnSuccess, postOnError, bodyForm);
+    requestHttp.postRequest('POST', urlPost, postOnSuccess, postOnError, bodyForm, headerRequest);
   });
 })();
